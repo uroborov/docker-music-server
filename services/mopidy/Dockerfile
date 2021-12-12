@@ -41,9 +41,10 @@ RUN pip3 install \
     Mopidy \
     Mopidy-MPD \
     Mopidy-Local \
-    Mopidy-TuneIn \
-    Mopidy-GMusic \
     Mopidy-Spotify \
+    Mopidy-Beets \
+    Mopidy-Youtube \
+    Mopidy-YTMusic \
     Mopidy-Iris
 
 RUN mkdir -p /mopidy
@@ -53,7 +54,7 @@ RUN sh -c 'echo "mopidy ALL=NOPASSWD: /usr/local/lib/python3.7/dist-packages/mop
 RUN sed -i 's+--config .*mopidy.conf+--config /mopidy/mopidy.conf+g' /usr/local/lib/python3.7/dist-packages/mopidy_iris/system.sh
 RUN chown -R mopidy:mopidy /mopidy
 
-COPY mopidy.conf /mopidy_default.conf
+# COPY mopidy.conf /mopidy_default.conf
 COPY mopidy.sh /usr/local/bin/mopidy.sh
 
 

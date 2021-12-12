@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Copy config if it does not already exist
-if [ ! -f /mopidy/mopidy.conf ]; then
-    cp /mopidy_default.conf /mopidy/mopidy.conf
-fi
+# if [ ! -f /mopidy/mopidy.conf ]; then
+    cp /mnt/nfs-config/mopidy.conf /mopidy/mopidy.conf
+# fi
 
 if [ ${APT_PACKAGES:+x} ]; then
     echo "-- INSTALLING APT PACKAGES $APT_PACKAGES --"

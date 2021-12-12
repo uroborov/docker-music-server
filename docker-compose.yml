@@ -1,0 +1,56 @@
+services:
+    
+    beets:
+        image: "uroboro89/beets:0.1"
+        container_name: "beets"
+        network_mode: "host"
+        volumes:
+            - nfs-config:/mnt/nfs-config
+            - nfs-data:/mnt/nfs-data
+            - nfs-library:/media/music-library
+            - nfs-library-org:/media/music
+
+    snapserver:
+        image: "uroboro89/snapserver:0.5"
+        container_name: "snapserver"
+        network_mode: "host"
+        volumes:
+            - nfs-config:/mnt/nfs-config
+            - nfs-data:/mnt/nfs-data
+            - fifo:/tmp/snapcast/
+
+    mopidy:
+        image: "uroboro89/mopidy:0.1"
+        container_name: "mopidy"
+        network_mode: "host"
+        volumes:
+            - nfs-library-org:/media/music
+            - nfs-config:/mnt/nfs-config
+            - nfs-data:/mnt/nfs-data
+            - fifo:/tmp/snapcast/
+
+volumes:
+    fifo:
+    nfs-config:
+        driver_opts:
+            type: nfs
+            o: addr=192.168.1.20,ro
+            device: :/volume1/music-library/docker/config
+
+    nfs-data:
+        driver_opts:
+            type: nfs
+            o: addr=192.168.1.20,rw
+            device: :/volume1/music-library/docker/data
+
+    nfs-library-org:
+        driver_opts:
+            type: nfs
+            o: addr=192.168.1.20,ro
+            device: :/volume1/music/
+
+    nfs-library:
+        driver_opts:
+            type: nfs
+            o: addr=192.168.1.20,rw
+            device: :/volume1/music-library/
