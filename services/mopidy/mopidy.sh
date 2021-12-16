@@ -2,7 +2,7 @@
 
 # Copy config if it does not already exist
 # if [ ! -f /mopidy/mopidy.conf ]; then
-    cp /mnt/nfs-config/mopidy.conf /mopidy/mopidy.conf
+    cp /mnt/efesto-config/mopidy.conf /mopidy/mopidy.conf
 # fi
 
 if [ ${APT_PACKAGES:+x} ]; then

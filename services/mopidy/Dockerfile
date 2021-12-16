@@ -59,5 +59,5 @@ COPY mopidy.sh /usr/local/bin/mopidy.sh
 
 
 EXPOSE 6600 6680
-USER mopidy
+USER root
 ENTRYPOINT ["/usr/local/bin/mopidy.sh"]

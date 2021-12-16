@@ -1,0 +1,39 @@
+services:
+    
+    beets:
+        image: "uroboro89/beets:latest"
+        container_name: "beets"
+        network_mode: "host"
+        restart: unless-stopped
+        volumes:
+            - /volume1/music-library/docker/config:/mnt/efesto-config
+            - /volume1/music-library/docker/data:/mnt/efesto-data
+            - /volume1/music-library:/media/music-library
+            - /volume1/music:/media/music
+
+    snapserver:
+        image: "uroboro89/snapserver:latest"
+        container_name: "snapserver"
+        network_mode: "host"
+        restart: unless-stopped
+        volumes:
+            - /volume1/music-library/docker/config:/mnt/efesto-config
+            - /volume1/music-library/docker/data:/mnt/efesto-data
+            - fifo:/tmp/snapcast/
+
+    mopidy:
+        image: "uroboro89/mopidy:latest"
+        container_name: "mopidy"
+        network_mode: "host"
+        restart: unless-stopped
+        volumes:
+            - /volume1/music:/media/music
+            - /volume1/music-library:/media/music-library
+            - /volume1/music-library/docker/config:/mnt/efesto-config
+            - /volume1/music-library/docker/data:/mnt/efesto-data
+            - fifo:/tmp/snapcast/
+
+volumes:
+    fifo:
+
+

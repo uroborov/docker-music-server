@@ -1,7 +1,7 @@
 services:
     
     beets:
-        image: "uroboro89/beets:latest"
+        image: "uroboro89/beets:0.1"
         container_name: "beets"
         network_mode: "host"
         restart: unless-stopped
@@ -12,7 +12,7 @@ services:
             - efesto-library-org:/media/music
 
     snapserver:
-        image: "uroboro89/snapserver:latest"
+        image: "uroboro89/snapserver:0.5"
         container_name: "snapserver"
         network_mode: "host"
         restart: unless-stopped
@@ -22,45 +22,38 @@ services:
             - fifo:/tmp/snapcast/
 
     mopidy:
-        image: "uroboro89/mopidy:latest"
+        image: "uroboro89/mopidy:0.1"
         container_name: "mopidy"
         network_mode: "host"
         restart: unless-stopped
         volumes:
             - efesto-library-org:/media/music
-            - efesto-library:/media/music-library
             - efesto-config:/mnt/efesto-config
             - efesto-data:/mnt/efesto-data
             - fifo:/tmp/snapcast/
 
 volumes:
     fifo:
-
     efesto-config:
-        driver: local
         driver_opts:
-            type: none
-            o: bind
-            device: /volume1/music-library/docker/config/
+            type: nfs
+            o: addr=192.168.1.20,ro
+            device: :/volume1/music-library/docker/config
 
     efesto-data:
-        driver: local
         driver_opts:
-            type: none
-            o: bind
-            device: /volume1/music-library/docker/data/
+            type: nfs
+            o: addr=192.168.1.20,rw
+            device: :/volume1/music-library/docker/data
 
     efesto-library-org:
-        driver: local
         driver_opts:
-            type: none
-            o: bind
-            device: /volume1/music/
+            type: nfs
+            o: addr=192.168.1.20,ro
+            device: :/volume1/music/
 
     efesto-library:
-        driver: local
         driver_opts:
-            type: none
-            o: bind
-            device: /volume1/music-library/
-
+            type: nfs
+            o: addr=192.168.1.20,rw
+            device: :/volume1/music-library/
